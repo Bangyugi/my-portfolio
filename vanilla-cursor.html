@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla JS Liquid Cursor</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            overflow: hidden; /* Prevent scrollbars from cursor movement */
+        }
+
+        /* Hide default cursor on non-touch devices */
+        @media (pointer: fine) {
+            *, *::before, *::after {
+                cursor: none !important;
+            }
+        }
+
+        /* Container for the gooey effect */
+        .cursor-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            filter: url('#goo');
+        }
+
+        /* Main Cursor (Small Dot) */
+        .cursor-dot {
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Trailing Cursor (Larger Circle) */
+        .cursor-outline {
+            width: 32px;
+            height: 32px;
+            background-color: white; /* Needs to be filled for goo effect */
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Hover State */
+        .cursor-outline.hovered {
+            width: 64px;
+            height: 64px;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* Demo Elements */
+        h1 { font-size: 2rem; }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        a { color: #4a9eff; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Liquid Cursor Demo</h1>
+    <button>Hover Me</button>
+    <a href="#">I am a Link</a>
+
+    <!-- SVG Filter -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
+                <feColorMatrix
+                    in="blur"
+                    mode="matrix"
+                    values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -15"
+                    result="goo"
+                />
+                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Cursor Elements Container -->
+    <div class="cursor-container">
+        <div class="cursor-outline"></div>
+        <div class="cursor-dot"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia('(pointer: coarse)').matches) {
+                document.querySelector('.cursor-container').style.display = 'none';
+                return;
+            }
+
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            let mouseX = 0;
+            let mouseY = 0;
+            let outlineX = 0;
+            let outlineY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            });
+
+            const animate = () => {
+                // Slower follow for more "drag"
+                outlineX += (mouseX - outlineX) * 0.1;
+                outlineY += (mouseY - outlineY) * 0.1;
+
+                cursorOutline.style.left = `${outlineX}px`;
+                cursorOutline.style.top = `${outlineY}px`;
+
+                requestAnimationFrame(animate);
+            };
+            animate();
+
+            const interactiveElements = document.querySelectorAll('a, button, .clickable');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorOutline.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hovered'));
+            });
+        });
+    </script>
+</body>
+</html>

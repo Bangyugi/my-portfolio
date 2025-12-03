@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (pointer: fine) {
+  /* Hide cursor on EVERYTHING */
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
