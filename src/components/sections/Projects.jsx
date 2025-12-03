@@ -48,12 +48,12 @@ const Projects = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-slate-900 rounded-lg overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 shadow-xl"
+                className="bg-slate-900 rounded-lg overflow-hidden hover:transform hover:-translate-y-2 transition-all duration-300 shadow-xl flex flex-col h-full"
               >
-                <div className="h-48 bg-slate-700 flex items-center justify-center">
+                <div className="h-48 bg-slate-700 flex items-center justify-center flex-shrink-0">
                   <span className="text-slate-500 text-lg">Project Screenshot</span>
                 </div>
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-xl font-bold text-slate-200 mb-2">{project.title}</h3>
                   <p className="text-cyan-400 text-sm mb-2">{project.role}</p>
                   <p className="text-slate-400 mb-4">{project.description}</p>
@@ -64,7 +64,7 @@ const Projects = () => {
                       </span>
                     ))}
                   </div>
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 mt-auto">
                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-slate-300 hover:text-cyan-400 transition-colors">
                       <Github size={20} className="mr-2" /> Code
                     </a>

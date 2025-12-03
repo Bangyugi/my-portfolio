@@ -7,17 +7,17 @@ const Skills = () => {
     {
       category: 'Backend Development',
       icon: <Terminal className="w-8 h-8 text-cyan-400" />,
-      items: ['Spring Boot', 'Spring Security', 'Docker', 'ASP.Net', 'JavaScript (ES6+)'],
+      items: ['Java - Spring Boot', 'Node.js - Express.js', 'C# - ASP.Net'],
     },
     {
       category: 'Database Management',
       icon: <Database className="w-8 h-8 text-cyan-400" />,
-      items: ['MySQL', 'SQL Server', 'PostgreSQL', 'Neo4j', 'Redis'],
+      items: ['MySQL', 'SQL Server', 'PostgreSQL', 'Neo4j', 'Redis', 'Elasticsearch'],
     },
     {
       category: 'Frontend Development',
       icon: <Layout className="w-8 h-8 text-cyan-400" />,
-      items: ['HTML', 'CSS', 'React'],
+      items: ['HTML', 'CSS', 'React', 'Next.js', 'Tailwind CSS', 'Bootstrap'],
     },
     {
       category: 'AI Tools',
