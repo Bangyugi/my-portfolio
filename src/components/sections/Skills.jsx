@@ -5,34 +5,34 @@ import { Code, Database, Layout, Terminal, Cpu, PenTool, GitBranch } from 'lucid
 const Skills = () => {
   const skills = [
     {
-      category: 'Backend Development',
+      category: 'Languages',
+      icon: <Code className="w-8 h-8 text-cyan-400" />,
+      items: ['Java (Core, OOP)', 'JavaScript (ES6+)', 'SQL'],
+    },
+    {
+      category: 'Backend Frameworks',
       icon: <Terminal className="w-8 h-8 text-cyan-400" />,
-      items: ['Java - Spring Boot', 'Node.js - Express.js', 'C# - ASP.Net'],
+      items: ['Spring Boot', 'Spring Security', 'Spring Data JPA', 'Hibernate'],
     },
     {
-      category: 'Database Management',
-      icon: <Database className="w-8 h-8 text-cyan-400" />,
-      items: ['MySQL', 'SQL Server', 'PostgreSQL', 'Neo4j', 'Redis', 'Elasticsearch'],
-    },
-    {
-      category: 'Frontend Development',
+      category: 'Frontend',
       icon: <Layout className="w-8 h-8 text-cyan-400" />,
-      items: ['HTML', 'CSS', 'React', 'Next.js', 'Tailwind CSS', 'Bootstrap'],
+      items: ['ReactJS', 'Material UI', 'Tailwind CSS', 'HTML5/CSS3'],
     },
     {
-      category: 'AI Tools',
-      icon: <Cpu className="w-8 h-8 text-cyan-400" />,
-      items: ['Chat GPT', 'Gemini', 'Copilot'],
+      category: 'Databases',
+      icon: <Database className="w-8 h-8 text-cyan-400" />,
+      items: ['PostgreSQL', 'Neo4j (Graph DB)', 'Redis (Caching)', 'MySQL'],
     },
     {
-      category: 'UI/UX Design',
-      icon: <PenTool className="w-8 h-8 text-cyan-400" />,
-      items: ['Adobe XD', 'Adobe Illustrator', 'Figma'],
-    },
-    {
-      category: 'Version Control',
+      category: 'DevOps & Tools',
       icon: <GitBranch className="w-8 h-8 text-cyan-400" />,
-      items: ['Git/GitHub', 'Agile Scrum'],
+      items: ['Docker', 'Git/GitHub', 'Postman', 'IntelliJ IDEA', 'Maven'],
+    },
+    {
+      category: 'Concepts',
+      icon: <Cpu className="w-8 h-8 text-cyan-400" />,
+      items: ['RESTful APIs', 'JWT Authentication', 'Data Structures & Algorithms'],
     },
   ];
 

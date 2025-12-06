@@ -17,10 +17,10 @@ const About = () => {
           </h2>
           <div className="text-slate-400 text-lg leading-relaxed text-center space-y-6">
             <p>
-              Aspiring to apply my in-depth knowledge of Java Spring Boot and hands-on project experience to develop high-performance backend systems.
+              Aspiring backend developer with a solid foundation in Java Spring Boot and Database Design. Dedicated to building scalable, high-performance applications.
             </p>
             <p>
-              Seeking opportunities to learn, contribute, and grow a long-term career as a professional Java Backend Developer.
+              My goal is to deliver business value through robust code while continuously aiming to become a Senior Software Engineer in the next 3-5 years.
             </p>
           </div>
         </motion.div>

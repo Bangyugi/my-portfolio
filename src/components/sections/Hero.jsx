@@ -20,7 +20,7 @@ const Hero = () => {
             BACKEND DEVELOPER
           </h3>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Aspiring to apply my in-depth knowledge of Java Spring Boot and hands-on project experience to develop high-performance backend systems.
+            Aspiring backend developer with a solid foundation in Java Spring Boot and Database Design. Dedicated to building scalable, high-performance applications. My goal is to deliver business value through robust code while continuously aiming to become a Senior Software Engineer in the next 3-5 years.
           </p>
           
           <div className="flex flex-col md:flex-row justify-center gap-4">
