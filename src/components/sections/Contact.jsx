@@ -1,8 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState({
+    loading: false,
+    success: false,
+    error: null
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ loading: true, success: false, error: null });
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus({ loading: false, success: true, error: null });
+        setFormData({ name: '', email: '', message: '' });
+        // Clear success message after 3 seconds
+        setTimeout(() => setStatus(prev => ({ ...prev, success: false })), 5000);
+      } else {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      setStatus({ loading: false, success: false, error: error.message });
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-slate-800/50">
       <div className="container mx-auto px-6">
@@ -39,12 +84,15 @@ const Contact = () => {
               </div>
             </div>
             
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-slate-400 mb-2 text-sm">Name</label>
                 <input
                   type="text"
                   id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors"
                   placeholder="Your Name"
                 />
@@ -54,6 +102,9 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors"
                   placeholder="your@email.com"
                 />
@@ -63,15 +114,36 @@ const Contact = () => {
                 <textarea
                   id="message"
                   rows="4"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                   className="w-full bg-slate-900 border border-slate-700 rounded p-3 text-slate-200 focus:outline-none focus:border-cyan-400 transition-colors"
                   placeholder="Your message..."
                 ></textarea>
               </div>
+
+              {status.error && (
+                <div className="p-3 bg-red-500/10 border border-red-500/50 text-red-500 rounded text-sm">
+                  {status.error}
+                </div>
+              )}
+
+              {status.success && (
+                <div className="p-3 bg-green-500/10 border border-green-500/50 text-green-500 rounded text-sm">
+                  Message sent successfully! I'll get back to you soon.
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-cyan-500 text-slate-900 font-bold py-3 rounded hover:bg-cyan-400 transition-colors flex items-center justify-center"
+                disabled={status.loading}
+                className="w-full bg-cyan-500 text-slate-900 font-bold py-3 rounded hover:bg-cyan-400 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message <Send size={18} className="ml-2" />
+                {status.loading ? (
+                  <>Sending... <Loader2 size={18} className="ml-2 animate-spin" /></>
+                ) : (
+                  <>Send Message <Send size={18} className="ml-2" /></>
+                )}
               </button>
             </form>
           </div>
