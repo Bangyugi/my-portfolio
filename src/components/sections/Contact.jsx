@@ -37,11 +37,16 @@ const Contact = () => {
       if (response.ok) {
         setStatus({ loading: false, success: true, error: null });
         setFormData({ name: '', email: '', message: '' });
-        // Clear success message after 3 seconds
         setTimeout(() => setStatus(prev => ({ ...prev, success: false })), 5000);
       } else {
-        const data = await response.json();
-        throw new Error(data.message || 'Failed to send message');
+        const text = await response.text();
+        try {
+          const data = JSON.parse(text);
+          throw new Error(data.message || 'Failed to send message');
+        } catch (e) {
+          console.error("Server Error Response:", text);
+          throw new Error('Server error: ' + (text.substring(0, 100) + '...'));
+        }
       }
     } catch (error) {
       setStatus({ loading: false, success: false, error: error.message });
